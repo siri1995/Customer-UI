@@ -1,9 +1,18 @@
 from django.core.urlresolvers import reverse_lazy
 from django.db import transaction
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
-
-from .models import Customer
 from .forms import AddressFormSet
+from django.shortcuts import render
+from rest_framework import viewsets
+from .serializers import *
+from .models import *
+class CustomerViewSet(viewsets.ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+
+class AddressViewSet(viewsets.ModelViewSet):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
 
 
 class CustomerList(ListView):
@@ -74,3 +83,4 @@ class CustomerAddressUpdate(UpdateView):
 class CustomerDelete(DeleteView):
     model = Customer
     success_url = reverse_lazy('customer-list')
+
