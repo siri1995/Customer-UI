@@ -1,14 +1,10 @@
-from django.conf.urls import url, include
-from django.contrib import admin
-from rest_framework import routers
-from sample3.views import *
+from django.conf.urls import url
 
-router = routers.DefaultRouter()
-router.register(r'customers',CustomerViewSet)
-router.register(r'address',AddressViewSet)
+from . import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include(router.urls)),
-    url(r'', include('sample3.urls')),
+    url(r'^$', views.CustomerList.as_view(), name='customer-list'),
+    url(r'customer/add/$', views.CustomerAddressCreate.as_view(), name='customer-add'),
+    url(r'customer/(?P<pk>[0-9]+)/$', views.CustomerAddressUpdate.as_view(), name='customer-update'),
+    url(r'customer/(?P<pk>[0-9]+)/delete/$', views.CustomerDelete.as_view(), name='customer-delete'),
 ]
